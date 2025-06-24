@@ -10,6 +10,7 @@ import com.marysoarez.minifood.domain.repository.FakeRestaurantRepository
 
 import com.marysoarez.minifood.domain.usecases.GetProductsByRestaurant
 import com.marysoarez.minifood.domain.usecases.GetRestaurantsUseCase
+import com.marysoarez.minifood.presentation.screen.cart.CartScreen
 import com.marysoarez.minifood.presentation.screen.home.HomeScreen
 import com.marysoarez.minifood.presentation.screen.home.HomeViewModel
 import com.marysoarez.minifood.presentation.screen.product.ProductListScreen
@@ -20,6 +21,8 @@ import com.marysoarez.minifood.presentation.viewmodel.CartViewModel
 object Routes {
     const val HOME = "home"
     const val PRODUCTS = "products/{restaurantId}"
+    const val CART = "cart"
+
 }
 
 @Composable
@@ -34,6 +37,9 @@ fun NavGraph(cartViewModel: CartViewModel) {
                 navController.navigate("products/$restaurantId")
             }
         }
+        composable(Routes.CART) {
+            CartScreen(cartViewModel)
+        }
 
         composable(
             route = Routes.PRODUCTS,
@@ -44,7 +50,7 @@ fun NavGraph(cartViewModel: CartViewModel) {
                 GetProductsByRestaurant(FakeProductRepository()),
                 restaurantId
             )
-            ProductListScreen(viewModel, cartViewModel)
+            ProductListScreen(viewModel, cartViewModel, navController )
         }
     }
 }
