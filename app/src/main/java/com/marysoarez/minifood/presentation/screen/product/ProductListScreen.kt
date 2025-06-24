@@ -1,20 +1,19 @@
 package com.marysoarez.minifood.presentation.screen.product
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
 import com.marysoarez.minifood.domain.model.Product
+import com.marysoarez.minifood.presentation.viewmodel.CartViewModel
+
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun ProductListScreen(viewModel: ProductListViewModel) {
+fun ProductListScreen(viewModel: ProductListViewModel, cartViewModel: CartViewModel) {
     val products by viewModel.products.collectAsState()
 
     Scaffold(
@@ -26,33 +25,31 @@ fun ProductListScreen(viewModel: ProductListViewModel) {
                 .fillMaxSize()
         ) {
             items(products) { product ->
-                ProductCard(product)
+                ProductCard(
+                    product = product,
+                    onAddToCart = { cartViewModel.addToCart(product) }
+                )
             }
+
         }
     }
 }
 
 @Composable
-fun ProductCard(product: Product) {
+fun ProductCard(product: Product, onAddToCart: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
-        elevation = CardDefaults.cardElevation()
+            .padding(8.dp)
     ) {
-        Row(modifier = Modifier.padding(8.dp)) {
-            Image(
-                painter = rememberImagePainter(product.imageUrl),
-                contentDescription = null,
-                modifier = Modifier.size(80.dp),
-                contentScale = ContentScale.Crop
-            )
-            Spacer(Modifier.width(8.dp))
-            Column {
-                Text(product.name, style = MaterialTheme.typography.titleMedium)
-                Text(product.description, style = MaterialTheme.typography.bodySmall)
-                Text("R$ ${product.price}", style = MaterialTheme.typography.bodyMedium)
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = product.name, style = MaterialTheme.typography.titleMedium)
+            Text(text = "R$ ${product.price}")
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(onClick = onAddToCart) {
+                Text("Adicionar ao carrinho")
             }
         }
     }
 }
+

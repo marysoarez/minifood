@@ -14,6 +14,7 @@ import com.marysoarez.minifood.presentation.screen.home.HomeScreen
 import com.marysoarez.minifood.presentation.screen.home.HomeViewModel
 import com.marysoarez.minifood.presentation.screen.product.ProductListScreen
 import com.marysoarez.minifood.presentation.screen.product.ProductListViewModel
+import com.marysoarez.minifood.presentation.viewmodel.CartViewModel
 
 
 object Routes {
@@ -22,7 +23,7 @@ object Routes {
 }
 
 @Composable
-fun NavGraph() {
+fun NavGraph(cartViewModel: CartViewModel) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.HOME) {
@@ -43,7 +44,7 @@ fun NavGraph() {
                 GetProductsByRestaurant(FakeProductRepository()),
                 restaurantId
             )
-            ProductListScreen(viewModel)
+            ProductListScreen(viewModel, cartViewModel)
         }
     }
 }
