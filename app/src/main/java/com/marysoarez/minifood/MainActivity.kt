@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import com.marysoarez.minifood.domain.repository.FakeRestaurantRepository
 import com.marysoarez.minifood.domain.usecases.GetRestaurantsUseCase
 import com.marysoarez.minifood.presentation.navigation.NavGraph
-import com.marysoarez.minifood.presentation.screen.home.HomeScreen
 import com.marysoarez.minifood.presentation.screen.home.HomeViewModel
 import com.marysoarez.minifood.ui.theme.MinifoodTheme
 
